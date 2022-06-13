@@ -155,6 +155,10 @@ class NDArray : public ObjectRef {
    */
   TVM_DLL static NDArray Empty(ShapeTuple shape, DLDataType dtype, Device dev,
                                Optional<String> mem_scope = NullOpt);
+
+  TVM_DLL void* dataptr();
+  TVM_DLL uint64_t Size();
+
   /*!
    * \brief Create a NDArray backed by a dlpack tensor.
    *

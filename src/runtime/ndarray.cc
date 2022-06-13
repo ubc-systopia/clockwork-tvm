@@ -198,6 +198,15 @@ NDArray NDArray::Empty(ShapeTuple shape, DLDataType dtype, Device dev, Optional<
   return ret;
 }
 
+void* NDArray::dataptr() {
+  if (data_ == nullptr) return nullptr;
+  return static_cast<void*>(get_mutable()->dl_tensor.data);
+}
+
+uint64_t NDArray::Size() {
+  return static_cast<uint64_t>(GetDataSize(get_mutable()->dl_tensor));
+}
+
 NDArray NDArray::FromDLPack(DLManagedTensor* tensor) {
   NDArray::Container* data = new NDArray::Container();
   // construct header

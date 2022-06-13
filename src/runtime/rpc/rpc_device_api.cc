@@ -55,7 +55,8 @@ class RPCDeviceAPI final : public DeviceAPI {
     return space;
   }
 
-  void* AllocDataSpace(Device dev, size_t nbytes, size_t alignment, DLDataType type_hint) final {
+  void* AllocDataSpace(Device dev, size_t nbytes, size_t alignment, DLDataType type_hint,
+                       bool workspace) final {
     auto sess = GetSess(dev);
     auto remote_dev = RemoveRPCSessionMask(dev);
     void* data =
@@ -66,7 +67,7 @@ class RPCDeviceAPI final : public DeviceAPI {
     space->sess = std::move(sess);
     return space;
   }
-  void FreeDataSpace(Device dev, void* ptr) final {
+  void FreeDataSpace(Device dev, void* ptr, bool workspace) final {
     RemoteSpace* space = static_cast<RemoteSpace*>(ptr);
     auto remote_dev = RemoveRPCSessionMask(dev);
     try {
